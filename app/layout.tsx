@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import LogoutButton from "@/components/LogoutButton";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Sakila app"
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession()
+
   return (
     <html lang="es">
       <head>
@@ -30,6 +34,9 @@ export default function RootLayout({
               <a className="navbar-brand" href="#">
                 App sakila
               </a>
+              {session && <div>
+                <LogoutButton />
+              </div>}
             </div>
           </nav>
         </header>
